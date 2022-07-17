@@ -1,0 +1,13 @@
+{
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": {
+    "*.inl": "plaintext",
+    "*.jl": "julia",
+    "*.lua": "lua",
+    "ostream": "cpp",
+    "limits": "cpp",
+    "utility": "cpp",
+    "xlocale": "cpp",
+    "random": "cpp"
+  }
+}

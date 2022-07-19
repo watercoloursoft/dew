@@ -20,9 +20,9 @@ template <typename T> struct err_impl {
   err_impl(const T &&value) : value(move(value)) {}
 };
 
-template <typename T, typename E> struct result {
-  result(ok_impl<T> value) : m_ok(value), m_is_ok(true) {}
-  result(err_impl<E> value) : m_err(value) {}
+template <typename T, typename E> struct Result {
+  Result(ok_impl<T> value) : m_ok(value), m_is_ok(true) {}
+  Result(err_impl<E> value) : m_err(value) {}
 
   [[nodiscard]] auto is_ok() const -> bool { return m_ok.value; }
   template <typename F> [[nodiscard]] auto is_ok_and(F fn) const -> bool {
@@ -34,13 +34,13 @@ template <typename T, typename E> struct result {
     return !is_ok() && fn();
   }
 
-  [[nodiscard]] auto ok() const -> option<T> {
+  [[nodiscard]] auto ok() const -> Option<T> {
     if (is_ok()) {
       return m_ok.value;
     }
     return None;
   }
-  [[nodiscard]] auto err() const -> option<E> {
+  [[nodiscard]] auto err() const -> Option<E> {
     if (is_err()) {
       return m_ok.value;
     }
@@ -50,7 +50,7 @@ template <typename T, typename E> struct result {
     if (is_ok()) {
       return m_ok.value;
     }
-    throw exception("expect() called on Err.");
+    throw Exception("expect() called on Err.");
   }
 
 private:
@@ -61,27 +61,27 @@ private:
   };
 };
 
-template <typename T> auto ok(T &value) -> ok_impl<T> {
+template <typename T> auto Ok(T &value) -> ok_impl<T> {
   return ok_impl<T>(dew::move(value));
 }
 
-template <typename T> auto ok(T &&value) -> ok_impl<T> {
+template <typename T> auto Ok(T &&value) -> ok_impl<T> {
   return ok_impl(dew::move(value));
 };
 
-template <typename T> auto ok(const T &&value) -> ok_impl<T> {
+template <typename T> auto Ok(const T &&value) -> ok_impl<T> {
   return ok_impl<T>(dew::move(value));
 };
 
-template <typename T> auto err(T &value) -> ok_impl<T> {
+template <typename T> auto Err(T &value) -> ok_impl<T> {
   return ok_impl<T>(dew::move(value));
 }
 
-template <typename T> auto err(T &&err) -> err_impl<T> {
+template <typename T> auto Err(T &&err) -> err_impl<T> {
   return err_impl<T>(dew::move(err));
 };
 
-template <typename T> auto err(const T &&err) -> err_impl<T> {
+template <typename T> auto Err(const T &&err) -> err_impl<T> {
   return err_impl<T>(dew::move(err));
 };
 

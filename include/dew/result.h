@@ -9,7 +9,6 @@ namespace dew {
 template <typename T> struct ok_impl {
   T value;
   ok_impl(T &&value) : value(move(value)) {}
-  ok_impl(const T &&value) : value(move(value)) {}
 };
 
 template <typename T> struct err_impl {
@@ -20,11 +19,12 @@ template <typename T> struct err_impl {
   err_impl(const T &&value) : value(move(value)) {}
 };
 
-template <typename T, typename E> struct Result {
+template <typename T, typename E> class Result {
+public:
   Result(ok_impl<T> value) : m_ok(value), m_is_ok(true) {}
   Result(err_impl<E> value) : m_err(value) {}
 
-  [[nodiscard]] auto is_ok() const -> bool { return m_ok.value; }
+  [[nodiscard]] auto is_ok() const -> bool { return m_is_ok; }
   template <typename F> [[nodiscard]] auto is_ok_and(F fn) const -> bool {
     return m_ok && fn(m_ok);
   }
@@ -62,27 +62,27 @@ private:
 };
 
 template <typename T> auto Ok(T &value) -> ok_impl<T> {
-  return ok_impl<T>(dew::move(value));
+  return ok_impl<T>(move(value));
 }
 
 template <typename T> auto Ok(T &&value) -> ok_impl<T> {
-  return ok_impl(dew::move(value));
+  return ok_impl<T>(move(value));
 };
 
 template <typename T> auto Ok(const T &&value) -> ok_impl<T> {
-  return ok_impl<T>(dew::move(value));
+  return ok_impl<T>(move(value));
 };
 
 template <typename T> auto Err(T &value) -> ok_impl<T> {
-  return ok_impl<T>(dew::move(value));
+  return ok_impl<T>(move(value));
 }
 
 template <typename T> auto Err(T &&err) -> err_impl<T> {
-  return err_impl<T>(dew::move(err));
+  return err_impl<T>(move(err));
 };
 
 template <typename T> auto Err(const T &&err) -> err_impl<T> {
-  return err_impl<T>(dew::move(err));
+  return err_impl<T>(move(err));
 };
 
 } // namespace dew

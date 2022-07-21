@@ -6,8 +6,11 @@
 #include "dew/option_fwd.h"
 #include "dew/result_fwd.h"
 
+#include <cassert>
+
 namespace dew {
-template <typename T> struct Option {
+template <typename T> class Option {
+public:
   Option(none_t) {}
   Option(T value) : m_has(true), m_value(value) {}
   Option() = default;
@@ -25,7 +28,7 @@ template <typename T> struct Option {
     if (is_some()) {
       return m_value;
     }
-    throw exception(message);
+    throw Exception(message);
   }
 
   auto unwrap() const -> T {

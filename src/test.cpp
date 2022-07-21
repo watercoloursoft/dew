@@ -28,7 +28,20 @@ auto test_function() -> void {
   new_vec.push(10);
 
   new_vec.insert(0, 13);
-  std::cout << new_vec.remove(1) << std::endl;
+  new_vec.insert(0, 134);
+  new_vec.remove(1);
+
+  auto p = new_vec.insert(3, 3);
+  if (p.is_ok()) {
+    std::cout << "inserted" << std::endl;
+  } else {
+    std::cout << "not inserted" << std::endl;
+  }
+
+  for (auto &&i : new_vec) {
+    std::cout << i << std::endl;
+  }
+  // std::cout << new_vec.get(5).unwrap() << std::endl;
 
   // auto second_item = new_vec.get(2);
 
@@ -38,12 +51,8 @@ auto test_function() -> void {
   //   std::cout << "Second item is not present" << std::endl;
   // }
 
-  try {
-    auto piss = function_that_sometimes_fails();
-    std::cout << piss.is_err() << std::endl;
-  } catch (const Exception &e) {
-    std::cerr << e.what() << '\n';
-  }
+  // auto piss = function_that_sometimes_fails();
+  // std::cout << piss.is_err() << std::endl;
 }
 
 auto main() -> int { test_function(); }

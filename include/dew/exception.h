@@ -14,7 +14,7 @@ private:
 };
 
 struct OutOfBoundsException : Exception {
-  OutOfBoundsException(char const *message) : Exception(message) {}
+  OutOfBoundsException() : Exception("OutOfBoundsException") {}
 };
 
 } // namespace dew

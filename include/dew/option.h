@@ -11,8 +11,8 @@
 namespace dew {
 template <typename T> class Option {
 public:
-  Option(none_t) {}
-  Option(T value) : m_has(true), m_value(value) {}
+  Option(none_t) : m_value{} {}
+  Option(T value) : m_value(value), m_has(true) {}
   Option() = default;
 
   [[nodiscard]] auto is_some() const -> bool { return m_has; }

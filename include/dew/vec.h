@@ -2,6 +2,8 @@
 
 #include "dew/base.h"
 #include "dew/option.h"
+#include "dew/option_fwd.h"
+#include "dew/result.h"
 #include "dew/unit.h"
 
 #include <cstdlib>
@@ -10,10 +12,7 @@
 namespace dew {
 template <typename T> class Vec {
 public:
-  enum class Error {
-    None,
-    OutOfBounds,
-  };
+  enum class Error { None, OutOfBounds, LargerShrinkAmount, AllocationError };
 
 public:
   Vec() { static_assert(sizeof(T) != 0, "Unable to use a zero-sized type."); }
@@ -42,9 +41,9 @@ public:
     ((T *)m_ptr)[m_len++] = move(element);
   }
 
-  auto pop() -> const T {
+  auto pop() -> Option<const T> {
     if (m_len == 0) {
-      return T{};
+      return None;
     }
     m_len--;
     return ((T *)m_ptr)[m_len];
@@ -94,6 +93,42 @@ public:
       return Err(Error::OutOfBounds);
     }
     return Ok<const T>(remove_unchecked(index));
+  }
+
+  // capacity
+  auto empty() const -> bool { return len() == 0; }
+  [[nodiscard]] auto len() const -> usize { return m_len; }
+  [[nodiscard]] auto cap() const -> usize { return m_cap; }
+
+  // modifiers
+  auto clear() -> void {
+    while (pop().is_some()) {
+    }
+  }
+
+  auto shrink_to_size(usize amount) -> Result<Unit, Error> {
+    const usize element_size = sizeof(T);
+
+    if (m_cap >= amount) {
+      return Err(Error::LargerShrinkAmount);
+    }
+
+    if (amount == 0) {
+      std::free(m_ptr);
+      m_ptr = nullptr;
+    } else if (amount != m_cap) {
+      usize new_size = element_size * amount;
+
+      if (void *memory = std::realloc(m_ptr, new_size)) {
+        m_ptr = memory;
+      } else {
+        Err(Error::AllocationError);
+      }
+
+      m_cap = amount;
+    }
+
+    return Ok(Unit{});
   }
 
   struct Iterator {
@@ -208,6 +243,7 @@ public:
     T *m_ptr;
   };
 
+  // Iterators
   auto begin() const -> const Iterator { return Iterator((T *)m_ptr); }
   auto end() const -> const Iterator { return Iterator((T *)m_ptr + m_len); }
 
@@ -218,14 +254,19 @@ public:
     return ConstantIterator((T *)m_ptr + m_len);
   }
 
-  auto rbegin() const -> const ReverseIterator { return ReverseIterator((T *)m_ptr + m_len - 1); }
-  auto rend() const -> const ReverseIterator { return ReverseIterator((T *)m_ptr - 1); }
+  auto rbegin() const -> const ReverseIterator {
+    return ReverseIterator((T *)m_ptr + m_len - 1);
+  }
+  auto rend() const -> const ReverseIterator {
+    return ReverseIterator((T *)m_ptr - 1);
+  }
 
-
-  auto crbegin() const -> const ConstantReverseIterator { return ConstantReverseIterator((T *)m_ptr + m_len - 1); }
-  auto crend() const -> const ConstantReverseIterator { return ConstantReverseIterator((T *)m_ptr - 1); }
-
-  [[nodiscard]] auto len() const -> usize { return m_len; }
+  auto crbegin() const -> const ConstantReverseIterator {
+    return ConstantReverseIterator((T *)m_ptr + m_len - 1);
+  }
+  auto crend() const -> const ConstantReverseIterator {
+    return ConstantReverseIterator((T *)m_ptr - 1);
+  }
 
 private:
   void *m_ptr{};

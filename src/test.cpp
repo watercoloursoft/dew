@@ -38,6 +38,8 @@ auto test_function() -> void {
     std::cout << "not inserted" << std::endl;
   }
 
+  new_vec.clear();
+
   for (auto x = new_vec.crbegin(); x != new_vec.crend(); x++)
   {
     auto i = *x;

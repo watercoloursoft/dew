@@ -152,17 +152,78 @@ public:
     T *m_ptr;
   };
 
-  auto begin() const -> const Iterator { return Iterator((T *)m_ptr); }
+  struct ReverseIterator {
+    ReverseIterator(T *ptr) : m_ptr(ptr) {}
 
+    auto operator*() -> T & { return *m_ptr; }
+    auto operator->() -> T * { return m_ptr; }
+
+    auto operator++() -> ReverseIterator & {
+      m_ptr--;
+      return *this;
+    }
+
+    auto operator++(int) -> ReverseIterator {
+      ReverseIterator tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+
+    auto operator==(const ReverseIterator &other) const -> bool {
+      return m_ptr == other.m_ptr;
+    };
+    auto operator!=(const ReverseIterator &other) const -> bool {
+      return m_ptr != other.m_ptr;
+    };
+
+  private:
+    T *m_ptr;
+  };
+
+  struct ConstantReverseIterator {
+    ConstantReverseIterator(T *ptr) : m_ptr(ptr) {}
+
+    auto operator*() const -> T & { return *m_ptr; }
+    auto operator->() const -> T * { return m_ptr; }
+
+    auto operator++() -> ConstantReverseIterator & {
+      m_ptr--;
+      return *this;
+    }
+
+    auto operator++(int) -> ConstantReverseIterator {
+      ConstantReverseIterator tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+
+    auto operator==(const ConstantReverseIterator &other) const -> bool {
+      return m_ptr == other.m_ptr;
+    };
+    auto operator!=(const ConstantReverseIterator &other) const -> bool {
+      return m_ptr != other.m_ptr;
+    };
+
+  private:
+    T *m_ptr;
+  };
+
+  auto begin() const -> const Iterator { return Iterator((T *)m_ptr); }
   auto end() const -> const Iterator { return Iterator((T *)m_ptr + m_len); }
 
   auto cbegin() const -> const ConstantIterator {
     return ConstantIterator((T *)m_ptr);
   }
-
   auto cend() const -> const ConstantIterator {
     return ConstantIterator((T *)m_ptr + m_len);
   }
+
+  auto rbegin() const -> const ReverseIterator { return ReverseIterator((T *)m_ptr + m_len - 1); }
+  auto rend() const -> const ReverseIterator { return ReverseIterator((T *)m_ptr - 1); }
+
+
+  auto crbegin() const -> const ConstantReverseIterator { return ConstantReverseIterator((T *)m_ptr + m_len - 1); }
+  auto crend() const -> const ConstantReverseIterator { return ConstantReverseIterator((T *)m_ptr - 1); }
 
   [[nodiscard]] auto len() const -> usize { return m_len; }
 

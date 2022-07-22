@@ -21,7 +21,7 @@ template <typename T> struct err_impl {
 
 template <typename T, typename E> class Result {
 public:
-  Result(ok_impl<T> value) : m_ok(value), m_is_ok(true) {}
+  Result(ok_impl<T> value) : m_is_ok(true), m_ok(value) {}
   Result(err_impl<E> value) : m_err(value) {}
 
   [[nodiscard]] auto is_ok() const -> bool { return m_is_ok; }

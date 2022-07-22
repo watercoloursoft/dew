@@ -38,9 +38,12 @@ auto test_function() -> void {
     std::cout << "not inserted" << std::endl;
   }
 
-  for (auto &&i : new_vec) {
+  for (auto x = new_vec.crbegin(); x != new_vec.crend(); x++)
+  {
+    auto i = *x;
     std::cout << i << std::endl;
   }
+
   // std::cout << new_vec.get(5).unwrap() << std::endl;
 
   // auto second_item = new_vec.get(2);

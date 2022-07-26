@@ -1,10 +1,10 @@
 #pragma once
 
-#include "dew/base.h"
-#include "dew/option.h"
-#include "dew/option_fwd.h"
-#include "dew/result.h"
-#include "dew/unit.h"
+#include "dew/base/base.h"
+#include "dew/base/option.h"
+#include "dew/base/option_fwd.h"
+#include "dew/base/result.h"
+#include "dew/base/unit.h"
 
 #include <cstdlib>
 #include <cstring>

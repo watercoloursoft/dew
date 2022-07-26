@@ -20,7 +20,7 @@ set(DEW_HEADERS
   ${DEW_INCLUDE_DIR}/vec.h
 )
 set(DEW_SOURCES
-  src/test.cpp
+  src/base.cpp
 )
 
 add_executable(dew ${DEW_SOURCES})

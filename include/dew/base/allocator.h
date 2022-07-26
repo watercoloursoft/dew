@@ -1,11 +1,13 @@
 #pragma once
 
-#include "dew/base.h"
+#include "dew/base/base.h"
 
 #include <cstdlib>
 
 namespace dew {
 template <class T, usize grow_size = 1024> class Pool {
+public:
+private:
   struct Block {
     Block *next;
   };
@@ -23,5 +25,10 @@ template <class T, usize grow_size = 1024> class Pool {
                                                                 : sizeof(Block);
     u8 m_data[m_block_size * grow_size];
   };
+
+  Block *m_first_free_block{nullptr};
+  Block *m_first_buffer{nullptr};
+
+  usize m_buffered_blocks{grow_size};
 };
 } // namespace dew

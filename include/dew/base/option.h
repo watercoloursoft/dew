@@ -1,10 +1,10 @@
 #pragma once
 
-#include "dew/base.h"
-#include "dew/exception.h"
+#include "dew/base/base.h"
+#include "dew/base/exception.h"
 
-#include "dew/option_fwd.h"
-#include "dew/result_fwd.h"
+#include "dew/base/option_fwd.h"
+#include "dew/base/result_fwd.h"
 
 #include <cassert>
 

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "dew/base/base.h"
-#include "dew/base/option_fwd.h"
-#include "dew/base/result_fwd.h"
+#include "dew/core/base.h"
+#include "dew/core/collections/collections_fwd.h"
 
 namespace dew {
 

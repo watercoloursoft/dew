@@ -1,10 +1,9 @@
 #pragma once
 
-#include "dew/base/base.h"
-#include "dew/base/option.h"
-#include "dew/base/option_fwd.h"
-#include "dew/base/result.h"
-#include "dew/base/unit.h"
+#include "dew/core/base.h"
+#include "dew/core/collections/option.h"
+#include "dew/core/collections/result.h"
+#include "dew/core/collections/unit.h"
 
 #include <cstdlib>
 #include <cstring>
@@ -60,7 +59,10 @@ public:
     return get_unchecked(index);
   }
 
-  auto operator[](usize index) const -> const T { return get_unchecked(index); }
+  auto operator[](usize index) -> T & { return get_unchecked(index); }
+  auto operator[](usize index) const -> const T & {
+    return get_unchecked(index);
+  }
 
   auto insert_unchecked(usize index, T &&element) {
     if (m_len == m_cap) {
@@ -96,9 +98,12 @@ public:
   }
 
   // capacity
-  auto empty() const -> bool { return len() == 0; }
+  [[nodiscard]] auto empty() const -> bool { return len() == 0; }
   [[nodiscard]] auto len() const -> usize { return m_len; }
   [[nodiscard]] auto cap() const -> usize { return m_cap; }
+
+  [[nodiscard]] auto data() const -> const T * { return m_ptr; }
+  [[nodiscard]] auto data() -> T * { return m_ptr; }
 
   // modifiers
   auto clear() -> void {

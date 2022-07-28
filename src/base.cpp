@@ -22,25 +22,29 @@ auto function_that_sometimes_fails() -> Result<u32, Error> {
 }
 
 auto test_function() -> void {
-  auto new_vec = Vec<int>{};
-  new_vec.push(5);
-  new_vec.push(10);
+  // // auto new_vec = Vec<int>{};
+  // // new_vec.push(5);
+  // // new_vec.push(10);
 
-  new_vec.insert(0, 13);
-  new_vec.insert(0, 134);
-  new_vec.remove(1);
+  // // new_vec.insert(0, 13);
+  // // new_vec.insert(0, 134);
+  // // new_vec.remove(1);
 
-  auto p = new_vec.insert(3, 3);
-  if (p.is_ok()) {
-    std::cout << "inserted" << std::endl;
-  } else {
-    std::cout << "not inserted" << std::endl;
-  }
+  // auto p = new_vec.insert(3, 3);
+  // if (p.is_ok()) {
+  //   std::cout << "inserted" << std::endl;
+  // } else {
+  //   std::cout << "not inserted" << std::endl;
+  // }
 
-  for (auto x = new_vec.crbegin(); x != new_vec.crend(); x++)
-  {
-    auto i = *x;
-    std::cout << i << std::endl;
+  // for (auto x = new_vec.crbegin(); x != new_vec.crend(); x++) {
+  //   auto i = *x;
+  //   std::cout << i << std::endl;
+  // }
+
+  auto new_array = Array<int>{5, 6, 7};
+  for (auto &&e : new_array) {
+    std::cout << e << std::endl;
   }
 
   // std::cout << new_vec.get(5).unwrap() << std::endl;

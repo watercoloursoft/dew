@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dew/base/base.h"
+#include "dew/core/base.h"
 
 namespace dew {
 struct Exception {

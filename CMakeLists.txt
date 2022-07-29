@@ -2,17 +2,15 @@ cmake_minimum_required(VERSION 3.2)
 
 project(dew)
 
-set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD 11)
 
-if (MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-endif()
 
 set(DEW_INCLUDE_DIR include)
 set(DEW_HEADERS
 )
 set(DEW_SOURCES
-  src/base.cpp
+  src/base.c
 )
 
 add_executable(dew ${DEW_SOURCES})

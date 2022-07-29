@@ -30,4 +30,4 @@
 
 .cache/
 build/
-.vscode
+.vscode/*

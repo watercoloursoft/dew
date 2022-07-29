@@ -11,6 +11,8 @@ set(DEW_HEADERS
 )
 set(DEW_SOURCES
   src/base.c
+
+  src/memory/allocator.c
 )
 
 add_executable(dew ${DEW_SOURCES})

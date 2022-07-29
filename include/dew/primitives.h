@@ -2,13 +2,14 @@
 
 #include "static_assert.h"
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
 #if defined(_cplusplus)
 namespace dew {
 #else
-#define nullptr 0;
+#define nullptr 0
 #endif
 // Unsigned int types.
 typedef uint8_t u8;
@@ -27,6 +28,8 @@ typedef float f32;
 typedef double f64;
 
 typedef size_t usize;
+
+typedef uintptr_t uptr;
 typedef intptr_t iptr;
 
 typedef struct slice {

@@ -5,7 +5,8 @@
 #include "../debug.h"
 #include "../macros.h"
 #include "../primitives.h"
-#include "memory_modify.h"
+#include "../util.h"
+#include "modify.h"
 
 typedef void(dew_mem_fail_cb)(const char *sourcefile, u32 line);
 
@@ -199,3 +200,40 @@ DEW_INLINE void *dew__calloc(const dew_allocator *alloc, usize size, u32 align,
   }
   return ptr;
 }
+
+#if defined(__cplusplus)
+namespace dew {
+class allocator {
+public:
+  allocator() = delete;
+  static allocator get_default() { return allocator(dew_allocator_malloc()); };
+  static allocator get_leak_detector() {
+    return allocator(dew_allocator_malloc_leak_detect());
+  }
+
+  void *malloc(usize size) { return dew_malloc(m_alloc, size); }
+  void *aligned_malloc(usize size,
+                       u32 align = DEW_CONFIG_ALLOCATOR_NATURAL_ALIGNMENT) {
+    return dew_aligned_malloc(m_alloc, size, align);
+  }
+  void *realloc(void *ptr, usize size) {
+    return dew_realloc(m_alloc, ptr, size);
+  }
+  void *aligned_realloc(void *ptr, usize size,
+                        u32 align = DEW_CONFIG_ALLOCATOR_NATURAL_ALIGNMENT) {
+    return dew_aligned_realloc(m_alloc, ptr, size, align);
+  }
+  void free(void *ptr) { dew_free(m_alloc, ptr); }
+  void aligned_free(void *ptr,
+                    u32 align = DEW_CONFIG_ALLOCATOR_NATURAL_ALIGNMENT) {
+    dew_aligned_free(m_alloc, ptr, align);
+  }
+  void *calloc(usize size) { return dew_calloc(m_alloc, size); }
+
+private:
+  allocator(const dew_allocator *allocator) : m_alloc(allocator) {}
+
+  const dew_allocator *m_alloc;
+};
+} // namespace dew
+#endif

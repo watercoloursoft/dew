@@ -6,9 +6,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#if defined(_cplusplus)
-namespace dew {
-#else
+#if !defined(__cplusplus)
 #define nullptr 0
 #endif
 // Unsigned int types.
@@ -53,6 +51,3 @@ static_assert(sizeof(i64) == 8, "Expected i64 to be 8 bytes.");
 
 static_assert(sizeof(f32) == 4, "Expected f32 to be 4 bytes.");
 static_assert(sizeof(f64) == 8, "Expected f64 to be 8 bytes.");
-#if defined(_cplusplus)
-} // namespace dew
-#endif

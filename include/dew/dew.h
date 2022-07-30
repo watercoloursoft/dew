@@ -2,5 +2,6 @@
 
 #include "debug.h"
 #include "memory/allocator.h"
-#include "memory/memory_modify.h"
+#include "memory/modify.h"
 #include "primitives.h"
+#include "util.h"

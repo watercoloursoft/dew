@@ -5,9 +5,10 @@
 int main() {
   const dew_allocator *alloc = dew_allocator_malloc();
 
-  dew_with(char *p = dew_calloc(alloc, 16), dew_free(alloc, p)) {
+  dew_with(dew_slice block = dew_calloc_slice(alloc, 16),
+           dew_free_slice(alloc, block)) {
     // one extra character for null termination
-    dew_memcpy(p, "egg3 from C", 11);
-    printf("%s\n", p);
+    dew_memcpy_slice(block, dew_slice_make("egg3 from C", 12));
+    printf("%s\n", (char *)block.ptr);
   }
 }

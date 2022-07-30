@@ -1,5 +1,6 @@
 #pragma once
 
+#include "macros.h"
 #include "static_assert.h"
 
 #include <stdbool.h>
@@ -29,11 +30,7 @@ typedef size_t usize;
 
 typedef uintptr_t uptr;
 typedef intptr_t iptr;
-
-typedef struct slice {
-  iptr ptr;
-  u64 size;
-} slice;
+typedef void *madd;
 
 typedef struct unit {
 } unit;

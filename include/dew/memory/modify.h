@@ -8,9 +8,6 @@
 
 #include <memory.h>
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
 DEW_INLINE madd dew_memset(madd dest, u32 value, usize size) {
   return memset(dest, value, size);
 }
@@ -46,9 +43,6 @@ DEW_INLINE i32 dew_memcmp_slice(const dew_slice a, const dew_slice b) {
     *b = tmp;                                                                  \
   }                                                                            \
   while (0)
-#if defined(__cplusplus)
-}
-#endif
 
 #if defined(__cplusplus)
 namespace dew {

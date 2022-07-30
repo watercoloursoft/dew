@@ -3,6 +3,12 @@
 #include "macros.h"
 #include "primitives.h"
 
+#if defined(__cplusplus)
+#define literal(T) T
+#else
+#define literal(T) (T)
+#endif
+
 #if DEW_COMPILER_GCC || DEW_COMPILER_CLANG
 #define dew_max(a, b)                                                          \
   ({                                                                           \

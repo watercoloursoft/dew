@@ -153,75 +153,72 @@ inline void operator delete(madd, dew__pnew_tag, madd) throw() {}
 #endif
 
 // impl
-DEW_INLINE void *dew__malloc(const dew_allocator *alloc, size_t size,
-                             uint32_t align, const char *file, const char *func,
-                             uint32_t line) {
+DEW_INLINE void *dew__malloc(const dew_allocator *alloc, usize size, u32 align,
+                             const char *file, const char *func, u32 line) {
   return alloc->alloc_cb(NULL, size, align, file, func, line, alloc->user_data);
 }
 
-DEW_INLINE void dew__free(const dew_allocator *alloc, void *ptr, uint32_t align,
-                          const char *file, const char *func, uint32_t line) {
+DEW_INLINE void dew__free(const dew_allocator *alloc, void *ptr, u32 align,
+                          const char *file, const char *func, u32 line) {
   alloc->alloc_cb(ptr, 0, align, file, func, line, alloc->user_data);
 }
 
-DEW_INLINE void *dew__realloc(const dew_allocator *alloc, void *ptr,
-                              size_t size, uint32_t align, const char *file,
-                              const char *func, uint32_t line) {
+DEW_INLINE void *dew__realloc(const dew_allocator *alloc, void *ptr, usize size,
+                              u32 align, const char *file, const char *func,
+                              u32 line) {
   return alloc->alloc_cb(ptr, size, align, file, func, line, alloc->user_data);
 }
 
-DEW_INLINE void *dew__aligned_alloc(const dew_allocator *alloc, size_t size,
-                                    uint32_t align, const char *file,
-                                    const char *func, uint32_t line) {
+DEW_INLINE void *dew__aligned_alloc(const dew_allocator *alloc, usize size,
+                                    u32 align, const char *file,
+                                    const char *func, u32 line) {
   align = dew_max((int)align, DEW_CONFIG_ALLOCATOR_NATURAL_ALIGNMENT);
-  const size_t total = size + align + sizeof(uint32_t);
+  const usize total = size + align + sizeof(u32);
   uint8_t *ptr = (uint8_t *)dew__malloc(alloc, total, 0, file, func, line);
   dew_assert(ptr);
-  uint8_t *aligned = (uint8_t *)dew_align_ptr(ptr, sizeof(uint32_t), align);
-  uint32_t *header = (uint32_t *)aligned - 1;
-  *header = (uint32_t)(uintptr_t)(aligned - ptr);
+  uint8_t *aligned = (uint8_t *)dew_align_ptr(ptr, sizeof(u32), align);
+  u32 *header = (u32 *)aligned - 1;
+  *header = (u32)(uintptr_t)(aligned - ptr);
   return aligned;
 }
 
 DEW_INLINE void dew__aligned_free(const dew_allocator *alloc, void *ptr,
                                   const char *file, const char *func,
-                                  uint32_t line) {
+                                  u32 line) {
   uint8_t *aligned = (uint8_t *)ptr;
-  uint32_t *header = (uint32_t *)aligned - 1;
+  u32 *header = (u32 *)aligned - 1;
   ptr = aligned - *header;
   dew__free(alloc, ptr, 0, file, func, line);
 }
 
 DEW_INLINE void *dew__aligned_realloc(const dew_allocator *alloc, void *ptr,
-                                      size_t size, uint32_t align,
-                                      const char *file, const char *func,
-                                      uint32_t line) {
+                                      usize size, u32 align, const char *file,
+                                      const char *func, u32 line) {
   if (ptr == NULL)
     return dew__aligned_alloc(alloc, size, align, file, func, line);
 
   uint8_t *aligned = (uint8_t *)ptr;
-  uint32_t offset = *((uint32_t *)aligned - 1);
+  u32 offset = *((u32 *)aligned - 1);
   ptr = aligned - offset;
 
   align = dew_max((int)align, DEW_CONFIG_ALLOCATOR_NATURAL_ALIGNMENT);
-  const size_t total = size + align + sizeof(uint32_t);
+  const usize total = size + align + sizeof(u32);
   ptr = dew__realloc(alloc, ptr, total, 0, file, func, line);
   dew_assert(ptr);
-  uint8_t *new_aligned = (uint8_t *)dew_align_ptr(ptr, sizeof(uint32_t), align);
+  uint8_t *new_aligned = (uint8_t *)dew_align_ptr(ptr, sizeof(u32), align);
 
   if (new_aligned == aligned)
     return aligned;
 
   aligned = (uint8_t *)ptr + offset;
   dew_memmove(new_aligned, aligned, size);
-  uint32_t *header = (uint32_t *)new_aligned - 1;
-  *header = (uint32_t)(new_aligned - (uint8_t *)ptr);
+  u32 *header = (u32 *)new_aligned - 1;
+  *header = (u32)(new_aligned - (uint8_t *)ptr);
   return new_aligned;
 }
 
-DEW_INLINE void *dew__calloc(const dew_allocator *alloc, size_t size,
-                             uint32_t align, const char *file, const char *func,
-                             uint32_t line) {
+DEW_INLINE void *dew__calloc(const dew_allocator *alloc, usize size, u32 align,
+                             const char *file, const char *func, u32 line) {
   void *ptr =
       alloc->alloc_cb(NULL, size, align, file, func, line, alloc->user_data);
   if (ptr) {
@@ -257,6 +254,9 @@ public:
     dew_aligned_free(m_alloc, ptr, align);
   }
   madd calloc(usize size) { return dew_calloc(m_alloc, size); }
+  const dew_allocator *get_raw() const { return m_alloc; }
+
+  operator const dew_allocator *() const { return m_alloc; }
 
 private:
   allocator(const dew_allocator *allocator) : m_alloc(allocator) {}

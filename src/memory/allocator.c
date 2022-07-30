@@ -1,4 +1,5 @@
 #include "dew/memory/allocator.h"
+#include "dew/string_util.h"
 
 // from https://github.com/septag/sx/blob/master/src/allocator.c
 
@@ -169,14 +170,14 @@ static void stblkck_internal_print(dew_dump_leak_cb dump_leak_fn,
                                    const char *reason, const char *file,
                                    const char *func, int line, usize size,
                                    void *ptr) {
-  // char text[512];
-  // dew_snprintf(text, sizeof(text), "%-6s: %s@%d: %s: %$.2d at 0x%p", reason,
-  //              file ? file : "[NA]", line, func ? func : "[NA]", size, ptr);
-  // if (dump_leak_fn) {
-  //   dump_leak_fn(text, file, func, line, size, ptr);
-  // } else {
-  //   puts(text);
-  // }
+  char text[512];
+  dew_snprintf(text, sizeof(text), "%-6s: %s@%d: %s: %$.2d at 0x%p", reason,
+               file ? file : "[NA]", line, func ? func : "[NA]", size, ptr);
+  if (dump_leak_fn) {
+    dump_leak_fn(text, file, func, line, size, ptr);
+  } else {
+    puts(text);
+  }
 }
 
 void dew_dump_leaks(dew_dump_leak_cb dump_leak_fn) {

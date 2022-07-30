@@ -7,9 +7,6 @@ typedef struct dew_slice {
   usize size;
 } dew_slice;
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
 DEW_INLINE const dew_slice dew_slice_make(madd ptr, usize size) {
   dew_slice s = {ptr, size};
   return s;
@@ -23,9 +20,8 @@ DEW_INLINE const dew_slice dew_slice_make_null() {
 DEW_INLINE const bool dew_slice_has(const dew_slice s) {
   return s.ptr != nullptr;
 }
-#if defined(__cplusplus)
-}
 
+#if defined(__cplusplus)
 namespace dew {
 struct slice {
   slice(const dew_slice s) : m_proxy_slice(s) {}

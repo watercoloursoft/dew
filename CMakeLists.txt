@@ -10,8 +10,10 @@ set(DEW_INCLUDE_DIR include)
 set(DEW_HEADERS
 )
 set(DEW_SOURCES
-  src/base.c
+  src/base.cpp
   src/memory/allocator.c
+  src/debug.c
+  src/string_util.c
 )
 
 add_executable(dew ${DEW_SOURCES})

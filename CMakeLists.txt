@@ -10,9 +10,10 @@ set(DEW_INCLUDE_DIR include)
 set(DEW_HEADERS
 )
 set(DEW_SOURCES
-  src/base.cpp
+  src/base.c
   src/memory/allocator.c
   src/debug.c
+  src/string.c
   src/string_util.c
 )
 

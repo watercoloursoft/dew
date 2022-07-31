@@ -23,7 +23,7 @@ DEW_API void dew_set_assert_callback(dew_assert_cb *callback);
 DEW_API void dew__debug_message(const char *sourcefile, uint32_t line,
                                 const char *fmt, ...);
 
-#if SX_CONFIG_ENABLE_ASSERT
+#if DEW_CONFIG_ENABLE_ASSERT
 #define dew_assert(_e)                                                         \
   do {                                                                         \
     if (!(_e)) {                                                               \
@@ -44,7 +44,7 @@ DEW_API void dew__debug_message(const char *sourcefile, uint32_t line,
 #endif
 
 // going to deprecate dew_assert_rel in favor of dew_assert_always
-#if SX_CONFIG_DISABLE_ASSERT_ALWAYS
+#if DEW_CONFIG_DISABLE_ASSERT_ALWAYS
 #define dew_assert_rel(_e)
 #define dew_assert_always dew_assert_rel
 #define dew_assert_alwaysf(_e, ...)

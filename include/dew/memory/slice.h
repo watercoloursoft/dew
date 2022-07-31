@@ -1,6 +1,6 @@
 #pragma once
-#include "../macros.h"
-#include "../primitives.h"
+#include "dew/macros.h"
+#include "dew/primitives.h"
 
 typedef struct dew_slice {
   madd ptr;

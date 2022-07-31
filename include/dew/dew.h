@@ -1,7 +1,7 @@
 #pragma once
 
-#include "debug.h"
-#include "memory/allocator.h"
-#include "memory/modify.h"
-#include "primitives.h"
-#include "util.h"
+#include "dew/debug.h"
+#include "dew/memory/allocator.h"
+#include "dew/memory/modify.h"
+#include "dew/primitives.h"
+#include "dew/util.h"

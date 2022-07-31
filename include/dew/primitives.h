@@ -1,7 +1,7 @@
 #pragma once
 
-#include "macros.h"
-#include "static_assert.h"
+#include "dew/macros.h"
+#include "dew/static_assert.h"
 
 #include <stdbool.h>
 #include <stddef.h>

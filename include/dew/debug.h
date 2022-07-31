@@ -1,7 +1,7 @@
 #pragma once
 
-#include "macros.h"
-#include "primitives.h"
+#include "dew/macros.h"
+#include "dew/primitives.h"
 
 typedef void(dew_assert_cb)(const char *text, const char *sourcefile,
                             uint32_t line);

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "config.h"
-#include "platform.h"
+#include "dew/config.h"
+#include "dew/platform.h"
 
 // copied from https://github.com/septag/sx/blob/master/include/sx/macros.h
 

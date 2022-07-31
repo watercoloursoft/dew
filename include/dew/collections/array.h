@@ -1,7 +1,9 @@
 #pragma once
 
-#include "../memory/allocator.h"
-#include "../util.h"
+// from https://github.com/septag/sx/blob/master/include/sx/array.h
+
+#include "dew/memory/allocator.h"
+#include "dew/util.h"
 
 #define dew_array(T) T *
 

@@ -2,11 +2,11 @@
 
 // from https://github.com/septag/sx/blob/master/include/sx/allocator.h
 
-#include "../debug.h"
-#include "../macros.h"
-#include "../primitives.h"
-#include "../util.h"
-#include "modify.h"
+#include "dew/debug.h"
+#include "dew/macros.h"
+#include "dew/memory/modify.h"
+#include "dew/primitives.h"
+#include "dew/util.h"
 
 typedef void(dew_mem_fail_cb)(const char *sourcefile, u32 line);
 

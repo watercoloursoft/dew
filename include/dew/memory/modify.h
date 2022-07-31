@@ -2,9 +2,9 @@
 
 // from https://github.com/septag/sx/blob/master/include/sx/sx.h
 
-#include "../macros.h"
-#include "../primitives.h"
-#include "slice.h"
+#include "dew/macros.h"
+#include "dew/memory/slice.h"
+#include "dew/primitives.h"
 
 #include <memory.h>
 

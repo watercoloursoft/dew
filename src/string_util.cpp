@@ -86,7 +86,7 @@ char *dew_strcpy(char *DEW_RESTRICT dst, i32 dst_sz,
   const int32_t max = dst_sz - 1;
   const int32_t num = (len < max ? len : max);
   if (num > 0) {
-    dew_memcpy(dst, src, num);
+    dew_memcpy((madd)dst, (const madd)src, num);
   }
   dst[num] = '\0';
 
@@ -215,7 +215,7 @@ char *dew_strncpy(char *DEW_RESTRICT dst, i32 dst_sz,
   const int32_t max = dst_sz - 1;
   const int32_t num = (len < max ? len : max);
   if (num > 0) {
-    dew_memcpy(dst, src, num);
+    dew_memcpy((madd)dst, (const madd)src, num);
   }
   dst[num] = '\0';
 
@@ -351,7 +351,7 @@ const char *dew_strstr(const char *DEW_RESTRICT str,
       return NULL;
     str = _start;
 
-    if (dew_memcmp(_start, find, find_len) == 0)
+    if (dew_memcmp((const madd)_start, (const madd)find, find_len) == 0)
       return str;
 
     _start = dew_strchar(_start + 1, ch);
@@ -590,10 +590,11 @@ char *dew_replace(char *dest, i32 dest_sz, const char *src, const char *find,
     } else {
       srclen -= (i32)(intptr_t)(src - start);
 
-      if (srclen >= flen && dew_memcmp(src, find, flen) == 0) {
+      if (srclen >= flen &&
+          dew_memcmp((const madd)src, (const madd)find, flen) == 0) {
         src += flen;
         i32 l = dew_min(dest_max - offset, rlen);
-        dew_memcpy(dest + offset, replace, l);
+        dew_memcpy((madd)(dest + offset), (const madd)replace, l);
         offset += l;
       } else {
         dest[offset++] = *src;

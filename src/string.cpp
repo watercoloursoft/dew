@@ -3,7 +3,7 @@
 
 dew_str_buf dew_str_buf_make(usize size, const dew_allocator *allocator) {
   dew_str_buf sb = {};
-  sb.data = dew_malloc(allocator, size);
+  sb.data = (char *)dew_malloc(allocator, size);
   sb.size = 0;
   sb.capacity = size;
   sb.allocator = allocator;
@@ -20,7 +20,7 @@ void dew_str_buf_append(dew_str_buf *src, dew_str add) {
     if (new_capacity < src->size + add.size) {
       new_capacity = src->size + add.size;
     }
-    char *new_data = dew_malloc(src->allocator, new_capacity);
+    char *new_data = (char *)dew_malloc(src->allocator, new_capacity);
     dew_memcpy(new_data, src->data, src->size);
     dew_free(src->allocator, src->data);
     src->data = new_data;
@@ -57,7 +57,7 @@ void dew_str_buf_remove(dew_str_buf *src, usize start, usize size) {
   new_size += p1_size;
   new_size += p2_size;
 
-  char *new_data = dew_calloc(src->allocator, new_size);
+  char *new_data = (char *)dew_calloc(src->allocator, new_size);
 
   src->capacity = new_size;
   src->size = new_size;

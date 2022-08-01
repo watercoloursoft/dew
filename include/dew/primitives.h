@@ -3,13 +3,9 @@
 #include "dew/macros.h"
 #include "dew/static_assert.h"
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
-#if !defined(__cplusplus)
-#define nullptr 0
-#endif
 // Unsigned int types.
 typedef uint8_t u8;
 typedef uint16_t u16;

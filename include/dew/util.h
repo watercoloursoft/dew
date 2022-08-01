@@ -9,37 +9,9 @@
 #define literal(T) (T)
 #endif
 
-#if DEW_COMPILER_GCC || DEW_COMPILER_CLANG
-#define dew_max(a, b)                                                          \
-  ({                                                                           \
-    typeof(a) var__a = (a);                                                    \
-    typeof(b) var__b = (b);                                                    \
-    (void)(&var__a == &var__b);                                                \
-    var__a > var__b ? var__a : var__b;                                         \
-  })
-
-#define dew_min(a, b)                                                          \
-  ({                                                                           \
-    typeof(a) var__a = (a);                                                    \
-    typeof(b) var__b = (b);                                                    \
-    (void)(&var__a == &var__b);                                                \
-    var__a < var__b ? var__a : var__b;                                         \
-  })
-
-#define dew_clamp(v_, min_, max_)                                              \
-  ({                                                                           \
-    typeof(v_) var__v = (v_);                                                  \
-    typeof(min_) var__min = (min_);                                            \
-    typeof(max_) var__max = (max_);                                            \
-    (void)(&var__min == &var__max);                                            \
-    var__v = var__v < var__max ? var__v : var__max;                            \
-    var__v > var__min ? var__v : var__min;                                     \
-  })
-#elif DEW_COMPILER_MSVC
 #define dew_max(a, b) ((a) > (b) ? (a) : (b))
 #define dew_min(a, b) ((a) < (b) ? (a) : (b))
 #define dew_clamp(v, min_, max_) dew_max(dew_min((v), (max_)), (min_))
-#endif // DEW_COMPILER_GCC||DEW_COMPILER_CLANG
 
 #if defined(__cplusplus)
 namespace dew {

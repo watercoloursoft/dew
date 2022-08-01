@@ -594,7 +594,7 @@ char *dew_replace(char *dest, i32 dest_sz, const char *src, const char *find,
           dew_memcmp((const madd)src, (const madd)find, flen) == 0) {
         src += flen;
         i32 l = dew_min(dest_max - offset, rlen);
-        dew_memcpy((madd)(dest + offset), (const madd)replace, l);
+        dew_memcpy(dest + offset, (const madd)replace, l);
         offset += l;
       } else {
         dest[offset++] = *src;
@@ -753,7 +753,7 @@ f32 dew_tofloat(const char *str, usize len) {
   f32 val = 0;
   bool past_decimal = false;
   bool neg = false;
-  f64 scale = 1.0f;
+  f32 scale = 1.0f;
   usize index = 0;
 
   if (str[0] == '-') {

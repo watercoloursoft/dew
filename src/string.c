@@ -2,7 +2,7 @@
 #include "dew/string_util.h"
 
 dew_str_buf dew_str_buf_make(usize size, const dew_allocator *allocator) {
-  dew_str_buf sb = {};
+  dew_str_buf sb = {0};
   sb.data = dew_malloc(allocator, size);
   sb.size = 0;
   sb.capacity = size;
@@ -76,7 +76,7 @@ void dew_str_buf_remove(dew_str_buf *src, usize start, usize size) {
 }
 
 dew_str dew_str_from(const char *data, usize size) {
-  dew_str s = {};
+  dew_str s = {0};
   s.data = data;
   s.size = size;
   return s;
@@ -110,7 +110,7 @@ dew_str dew_str_sub(dew_str str, usize start, usize end) {
   dew_assertf(end <= str.size, "dew_str_sub: end is out of bounds");
   dew_assertf(start <= end, "dew_str_sub: start is greater than end");
 
-  dew_str sub = {};
+  dew_str sub = {0};
   sub.data = str.data + start;
   sub.size = end - start;
   return sub;

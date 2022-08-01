@@ -33,6 +33,7 @@ typedef intptr_t iptr;
 typedef void *madd;
 
 typedef struct unit {
+  i8 filler;
 } unit;
 
 // Ensure all types are of the correct size.
